@@ -1,6 +1,6 @@
 # Como transformar o JARVIS em APK
 
-Este repositório já contém a estrutura de um app Android. Para gerar um APK instalável, você precisa compilar o módulo `:app` com Android Studio ou Gradle em uma máquina com o Android SDK instalado.
+Este repositório já contém a estrutura de um app Android. Para gerar um APK instalável, você precisa compilar o app Android na raiz do repositório com Android Studio ou Gradle em uma máquina com o Android SDK instalado.
 
 ## 1. Instale as ferramentas oficiais
 
@@ -31,26 +31,26 @@ Pelo terminal, dentro da raiz do projeto:
 
 ```bash
 export JAVA_HOME=/caminho/para/jdk-17
-./gradlew :app:assembleDebug
+./gradlew assembleDebug
 ```
 
 Se você não tiver `gradlew` ainda, use o Gradle instalado globalmente uma vez para gerar o wrapper:
 
 ```bash
 gradle wrapper --gradle-version 8.14.4
-./gradlew :app:assembleDebug
+./gradlew assembleDebug
 ```
 
 O APK será criado em:
 
 ```text
-app/build/outputs/apk/debug/app-debug.apk
+build/outputs/apk/debug/Jarvis-debug.apk
 ```
 
 Esse APK é para teste local e pode ser instalado com:
 
 ```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r build/outputs/apk/debug/Jarvis-debug.apk
 ```
 
 ## 4. Gere um APK assinado para distribuição

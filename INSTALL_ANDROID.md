@@ -24,12 +24,12 @@ Depois de gerar o APK, você pode instalar de duas formas:
 ### Instalar com cabo USB e ADB
 
 ```bash
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r build/outputs/apk/debug/Jarvis-debug.apk
 ```
 
 ### Enviar o APK para o celular
 
-1. Copie `app/build/outputs/apk/debug/app-debug.apk` para o celular por cabo USB, Google Drive, Nearby Share ou outro método confiável.
+1. Copie `build/outputs/apk/debug/Jarvis-debug.apk` para o celular por cabo USB, Google Drive, Nearby Share ou outro método confiável.
 2. Abra o arquivo no Android.
 3. Autorize a instalação de apps desconhecidos, se necessário.
 4. Toque em **Instalar**.
