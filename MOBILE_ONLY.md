@@ -42,3 +42,19 @@ Nesse caso, existem três opções:
 ## Depois de abrir o app
 
 O Android pode pedir permissões separadas para microfone, notificações, câmera, sobreposição em outros apps e captura de tela. Essas permissões são necessárias para voz, overlay flutuante e análise visual, mas devem ser concedidas apenas se você confiar no APK instalado.
+
+
+## APK pronto para baixar
+
+O repositório agora possui um workflow do GitHub Actions chamado **Build Android APK**. Quando ele rodar no GitHub, o APK será publicado como artifact chamado `Jarvis-debug-apk`.
+
+Para baixar pelo celular:
+
+1. Abra o repositório no GitHub.
+2. Toque em **Actions**.
+3. Abra a execução mais recente de **Build Android APK**.
+4. Baixe o artifact **Jarvis-debug-apk**.
+5. Extraia o ZIP baixado, se o GitHub entregar o artifact compactado.
+6. Abra `Jarvis-debug.apk` e instale.
+
+Quando uma tag começando com `v` for criada, por exemplo `v1.0.0`, o mesmo workflow também anexará `Jarvis-debug.apk` à página de **Releases**, facilitando o download direto.

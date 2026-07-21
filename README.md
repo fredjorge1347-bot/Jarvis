@@ -30,3 +30,8 @@ Veja como obter o APK e instalar no Android em [`INSTALL_ANDROID.md`](INSTALL_AN
 ## Estou só no celular
 
 Se você quer instalar usando apenas o telefone, siga [`MOBILE_ONLY.md`](MOBILE_ONLY.md).
+
+
+## APK pronto via GitHub Actions
+
+O workflow `.github/workflows/android-apk.yml` compila o APK e publica o artifact `Jarvis-debug-apk` para download. Tags `v*` também anexam o APK em Releases.
