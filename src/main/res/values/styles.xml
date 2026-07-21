@@ -1,1 +1,7 @@
-<resources><style name="Theme.Jarvis" parent="android:style/Theme.Material.Light.NoActionBar"><item name="android:windowSplashScreenBackground">#050814</item></style></resources>
+<resources>
+    <style name="Theme.Jarvis" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#050814</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">#00E5FF</item>
+    </style>
+</resources>

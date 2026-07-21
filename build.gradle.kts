@@ -17,12 +17,15 @@ android {
         versionCode = 1
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        setProperty("archivesBaseName", "Jarvis")
     }
 
     buildFeatures {
         compose = true
     }
+}
+
+base {
+    archivesName.set("Jarvis")
 }
 
 dependencies {
