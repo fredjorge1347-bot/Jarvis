@@ -1,13 +1,13 @@
 package com.jarvis;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -16,14 +16,16 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements TextToSpeech.OnInitListener {
     private JarvisMemory memory;
     private TextView answer;
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         memory = new JarvisMemory(this);
+        tts = new TextToSpeech(this, this);
         setContentView(createUi());
     }
 
@@ -51,7 +53,7 @@ public class MainActivity extends Activity {
                 String response = JarvisEngine.respond(command);
                 memory.save(command, response);
                 answer.setText(response);
-                startService(new Intent(this, JarvisVoiceService.class).putExtra("say", response));
+                speak(response);
             }
         });
 
@@ -86,6 +88,28 @@ public class MainActivity extends Activity {
         lp.setMargins(0, 20, 0, 20);
         card.setLayoutParams(lp);
         return card;
+    }
+
+
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+            tts.setLanguage(new java.util.Locale("pt", "BR"));
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (tts != null) {
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    private void speak(String text) {
+        if (tts != null) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "jarvis-response");
+        }
     }
 
     public static final class HologramLayout extends LinearLayout {

@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android Release
 
 on:
   push:
@@ -10,8 +10,8 @@ permissions:
   contents: write
 
 jobs:
-  build-apk:
-    name: Build debug APK
+  build-release:
+    name: Build Play-safe release artifacts
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -34,18 +34,45 @@ jobs:
         with:
           gradle-version: "8.13"
 
-      - name: Build APK
-        run: gradle assembleDebug --no-daemon --stacktrace
+      - name: Decode release keystore when configured
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > release.keystore
 
-      - name: Upload APK artifact
+      - name: Build release artifacts
+        run: |
+          if [ -f release.keystore ]; then
+            gradle assembleRelease bundleRelease --no-daemon --stacktrace \
+              -PJARVIS_KEYSTORE_FILE=release.keystore \
+              -PJARVIS_KEYSTORE_PASSWORD='${{ secrets.ANDROID_KEYSTORE_PASSWORD }}' \
+              -PJARVIS_KEY_ALIAS='${{ secrets.ANDROID_KEY_ALIAS }}' \
+              -PJARVIS_KEY_PASSWORD='${{ secrets.ANDROID_KEY_PASSWORD }}'
+          else
+            gradle bundleRelease --no-daemon --stacktrace
+          fi
+
+      - name: Upload Play Store AAB
         uses: actions/upload-artifact@v4
         with:
-          name: Jarvis-debug-apk
-          path: build/outputs/apk/debug/Jarvis-debug.apk
+          name: Jarvis-release-aab
+          path: build/outputs/bundle/release/Jarvis-release.aab
           if-no-files-found: error
 
-      - name: Publish APK on tagged release
+      - name: Upload signed APK when keystore is configured
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jarvis-release-apk
+          path: build/outputs/apk/release/Jarvis-release.apk
+          if-no-files-found: error
+
+      - name: Publish AAB on tagged release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: build/outputs/apk/debug/Jarvis-debug.apk
+          files: build/outputs/bundle/release/Jarvis-release.aab
+
+      - name: Publish signed APK on tagged release when keystore is configured
+        if: startsWith(github.ref, 'refs/tags/v') && secrets.ANDROID_KEYSTORE_BASE64 != ''
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/outputs/apk/release/Jarvis-release.apk

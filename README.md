@@ -9,7 +9,7 @@ JARVIS is a root-level Android app configured to produce a downloadable APK thro
 - Local persistent memory using Android SQLite.
 - Foreground TextToSpeech service for spoken responses.
 - Android manifest permissions for network, voice, camera, overlay, notifications, and foreground service behavior.
-- GitHub Actions workflow that builds `Jarvis-debug.apk` and uploads it as the `Jarvis-debug-apk` artifact.
+- GitHub Actions workflow that builds Play Store release artifacts (`Jarvis-release.aab` and, when a keystore is configured, `Jarvis-release.apk`).
 
 ## Gerar APK
 
@@ -25,4 +25,9 @@ Se você quer instalar usando apenas o telefone, siga [`MOBILE_ONLY.md`](MOBILE_
 
 ## APK pronto via GitHub Actions
 
-O workflow `.github/workflows/android-apk.yml` compila o APK e publica o artifact `Jarvis-debug-apk` para download. Tags `v*` também anexam o APK em Releases.
+O workflow `.github/workflows/android-apk.yml` compila o pacote seguro `Jarvis-release.aab` para Play Store e, quando uma keystore é configurada, também publica `Jarvis-release.apk`.
+
+
+## Segurança / Play Store
+
+Veja [`PLAY_STORE_SECURITY.md`](PLAY_STORE_SECURITY.md) para entender como gerar artefatos mais seguros, reduzir alertas do Play Protect e publicar pela Play Console.
