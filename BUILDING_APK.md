@@ -37,7 +37,7 @@ export JAVA_HOME=/caminho/para/jdk-17
 Se você não tiver `gradlew` ainda, use o Gradle instalado globalmente uma vez para gerar o wrapper:
 
 ```bash
-gradle wrapper --gradle-version 8.14.4
+gradle wrapper --gradle-version 8.13
 ./gradlew assembleDebug
 ```
 
